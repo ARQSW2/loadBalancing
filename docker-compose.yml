@@ -3,18 +3,21 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
+    image: arqsw2-server
     networks:
       - internal
   server2:
     build:
       context: ./server
       dockerfile: Dockerfile
+    image: arqsw2-server
     networks:
       - internal
   server3:
     build:
       context: ./server
       dockerfile: Dockerfile
+    image: arqsw2-server
     networks:
       - internal
   nginx:
