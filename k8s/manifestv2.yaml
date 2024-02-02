@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nodejs
+      env: arqsw2
+  template:
+    metadata:
+      labels:
+        app: nodejs
+        env: arqsw2
+    spec:
+      containers:
+      - image: arqsw2-server
+        imagePullPolicy: IfNotPresent
+        name: server
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "500m"
+          limits:
+            memory: "520Mi"
+            cpu: "1"
+        ports:
+          - name: http
+            containerPort: 3000
+            protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+  labels:
+    app: nodejs
+    env: arqsw2
+    fruta: arqsw2
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: http
+      protocol: TCP
+      name: http
+      nodePort: 30007
+  selector:
+    app: nodejs
+    env: arqsw2
