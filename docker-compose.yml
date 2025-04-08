@@ -21,9 +21,16 @@ services:
     networks:
       - internal
   nginx:
-    image: nginx:alpine
+    # Usamos la imagen de nginx de bitnami por que incluye los módulos necesarios para los ejemplos
+    image: bitnami/nginx:latest
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      # IMPORTANTE: solo un archivo de configuración a la vez
+      # round robin
+      #- ./nginx.conf:/opt/bitnami/nginx/conf/nginx.conf
+      # ip hash
+      #- ./nginx.ip_hash.conf:/opt/bitnami/nginx/conf/nginx.conf
+      # least conn
+      - ./nginx.least_conn.conf:/opt/bitnami/nginx/conf/nginx.conf
     ports:
       - 8080:8080
     networks:
@@ -37,6 +44,8 @@ services:
     image: haproxy:2.0-alpine
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      #- ./haproxy.least_conn.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      #- ./haproxy.ip_hash.cfg:/usr/local/etc/haproxy/haproxy.cfg
     ports:
       - 8081:8080
     networks:
@@ -46,7 +55,19 @@ services:
       - server1
       - server2
       - server3
-
+  tester-nginx:
+    image: curlimages/curl
+    networks:
+      - internal
+    command: >
+      sh -c "while true; do
+        curl -s -w '\nNginx Response: %{http_code} - %{time_total}s\n' http://nginx:8080/hello; \
+        echo ''; \
+        sleep 2; \
+      done"
+    depends_on:
+      - nginx
+      
 networks:
   loadBalancer:
     driver: bridge

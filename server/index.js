@@ -1,9 +1,9 @@
 import express from 'express';
-import { v4 as uuidv4 } from 'uuid';
+import os from 'os';
 
 const app = express();
 const port = process.env.PORT || 3000;
-const serverId = uuidv4();
+const serverId = os.hostname(); // Obtiene el nombre del host
 
 app.get('/hello', (req, res) => {
   res.send({
@@ -13,5 +13,5 @@ app.get('/hello', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server listening at ${port}`);
+  console.log(`Server ${serverId} listening at ${port}`);
 });
