@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: server
 spec:
-  replicas: 4
+  replicas: 3
   selector:
     matchLabels:
       app: nodejs
@@ -43,7 +43,6 @@ metadata:
   labels:
     app: nodejs
     env: arqsw2
-    fruta: arqsw2
 spec:
   type: NodePort
   ports:

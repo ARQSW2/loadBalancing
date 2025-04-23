@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: clase3
+spec: {}
+status: {}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nodejs
+    env: arqsw2
+  name: server3
+  namespace: clase3
+spec:
+  containers:
+  - image: arqsw2-server
+    imagePullPolicy: IfNotPresent
+    name: server3
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}

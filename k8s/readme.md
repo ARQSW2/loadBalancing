@@ -9,17 +9,17 @@ kubectl create ns arqsw2
 Como correr los pods solos 
 
 ``` bash
-kubectl run server1 --image=arqsw2-server --restart=Never --image-pull-policy IfNotPresent --labels="app=nodejs,env=arqsw2"
-kubectl run server2 --image=arqsw2-server --restart=Never --image-pull-policy IfNotPresent --labels="app=nodejs,env=arqsw2"
-kubectl run server3 --image=arqsw2-server --restart=Never --image-pull-policy IfNotPresent --labels="app=nodejs,env=arqsw2"
+kubectl run server1 -n arqsw2 --image=arqsw2-server --restart=Never --image-pull-policy IfNotPresent --labels="app=nodejs,env=arqsw2"
+kubectl run server2 -n arqsw2 --image=arqsw2-server --restart=Never --image-pull-policy IfNotPresent --labels="app=nodejs,env=arqsw2"
+kubectl run server3 -n arqsw2 --image=arqsw2-server --restart=Never --image-pull-policy IfNotPresent --labels="app=nodejs,env=arqsw2"
 ``` 
 
-Como correr el maniesto con los pods sueltos
+Como correr el manifiesto con los pods sueltos
 ``` bash
 kubectl apply -f .\k8s\manifest.yaml -n arqsw2
 ```
 
-Como correr el maniesto con deployment
+Como correr el manifiesto con deployment
 ``` bash
 kubectl apply -f .\k8s\manifestv2.yaml -n arqsw2
 ```

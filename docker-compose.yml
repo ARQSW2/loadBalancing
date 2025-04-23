@@ -20,17 +20,24 @@ services:
     image: arqsw2-server
     networks:
       - internal
+  server4:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: arqsw2-server
+    networks:
+      - internal
   nginx:
     # Usamos la imagen de nginx de bitnami por que incluye los módulos necesarios para los ejemplos
     image: bitnami/nginx:latest
     volumes:
       # IMPORTANTE: solo un archivo de configuración a la vez
       # round robin
-      #- ./nginx.conf:/opt/bitnami/nginx/conf/nginx.conf
+      - ./nginx.conf:/opt/bitnami/nginx/conf/nginx.conf
       # ip hash
       #- ./nginx.ip_hash.conf:/opt/bitnami/nginx/conf/nginx.conf
       # least conn
-      - ./nginx.least_conn.conf:/opt/bitnami/nginx/conf/nginx.conf
+      #- ./nginx.least_conn.conf:/opt/bitnami/nginx/conf/nginx.conf
     ports:
       - 8080:8080
     networks:
